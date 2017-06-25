@@ -1,9 +1,11 @@
 #coding:utf-8
 
+import os
 from sys import argv
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+import mysql.connector
 
 gameid = argv[1]
 pagegenerator_home = os.getenv('PG_HOME')
@@ -77,17 +79,17 @@ end_js_filepath = boardgame_home + slash + nameEN + slash + end_js_filename
 
 
 jspath_list = [intro_js_filepath,setup_js_filepath,flow_js_filepath,end_js_filepath]
-print cover_vars_filepath
+#print cover_vars_filepath
 
-x_line_no = 0
 part_no = 0
 for index in range(len(filepath_list)):
+	x_line_no = 0
 	with open(filepath_list[index],'r') as f:
 		lines = f.readlines()
 		for line_no in range(len(lines)):
 			line = lines[line_no].strip('\n')
 			if line == 'A':
-				lines[line_no] = 'part['+str(part_no)+']=generate(array);\nlist_line = \'\';\n'
+				lines[line_no] = 'part['+str(part_no)+']=generate(array);\nlist_line = \'\';\narray=[];\n'
 				x_line_no = line_no + 1
 				part_no = part_no + 1
 			else:
@@ -95,4 +97,6 @@ for index in range(len(filepath_list)):
 				lines[line_no] = ("array[" + str(line_no_mod) + "]='" + line + "';\n")
 
 	with open(jspath_list[index],'w') as f:
-		f.writelines(lines);
+		f.write('list_line = \'\';\narray=[];\n')
+		f.writelines(lines)
+		#f.writelines(lines);

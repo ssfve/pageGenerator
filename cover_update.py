@@ -56,14 +56,7 @@ cur.close()
 con.commit()
 con.close()
 
-intro_vars_filename = 'intro.variables.js'
-rule_vars_filename = 'rule.variables.js'
-
 cover_vars_filepath = boardgame_home + slash + nameEN + slash + cover_vars_filename
-rule_vars_filepath = boardgame_home + slash + nameEN + slash + rule_vars_filename
-intro_vars_filename = boardgame_home + slash + nameEN + slash + intro_vars_filename
-intro_template_filename = boardgame_home + slash + template + slash + intro_vars_filename
-
 print cover_vars_filepath
 with open(cover_vars_filepath,'r') as f:
     lines = f.readlines()
@@ -120,8 +113,9 @@ with open(cover_vars_filepath,'r') as f:
 
 
 with open(cover_vars_filepath,'w') as f:
-    print lines
+    #print lines
     f.writelines(lines);
+    '''
     f.write("var button1 = \'主题概念\'\n")
     button2_str = 'var button2 = \'>>进入'+nameCN+nameEN+'<<\'\n'
     f.write(button2_str)
@@ -146,17 +140,8 @@ with open(cover_vars_filepath,'w') as f:
     f.write("var categoryTitle = \'分类机制:\'\n")
     f.write("var cover_img_scale_factor = 0.5\n")
     f.write("var pixels = \'px\'\n")
+    '''
 
-
-with open(intro_vars_filename,'w') as f:
-    f.write("var nameCN = \'" + nameCN + "\';\n")
-    f.write("var nameEN = \'"+ nameEN + "\';\n")
-    f.write("var header_title = \'主题概念\';\n")
-    f.write("var array = [];\n")
-
-        
-        
-        
 
 
 
