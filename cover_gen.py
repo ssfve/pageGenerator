@@ -62,9 +62,10 @@ rule_vars_filename = 'rule.variables.js'
 cover_vars_filepath = boardgame_home + slash + nameEN + slash + cover_vars_filename
 rule_vars_filepath = boardgame_home + slash + nameEN + slash + rule_vars_filename
 intro_vars_filename = boardgame_home + slash + nameEN + slash + intro_vars_filename
-intro_template_filename = boardgame_home + slash + template + slash + intro_vars_filename
+intro_template_filename = boardgame_home + slash + 'template' + slash + intro_vars_filename
 
 print cover_vars_filepath
+
 with open(cover_vars_filepath,'r') as f:
     lines = f.readlines()
     for line_no in range(len(lines)):
@@ -111,6 +112,14 @@ with open(cover_vars_filepath,'r') as f:
                     category_lsit[index] = u'经营'
                 if category_lsit[index] == u'Negotiation':
                     category_lsit[index] = u'谈判'
+                if category_lsit[index] == u'Card Game':
+                    category_lsit[index] = u'卡牌'
+                if category_lsit[index] == u'City Building':
+                    category_lsit[index] = u'城市建设'
+                if category_lsit[index] == u'Family':
+                    category_lsit[index] = u'家庭'
+                if category_lsit[index] == u'Puzzle':
+                    category_lsit[index] = u'拼图'
             category_str = '，'.join(category_lsit)
             #print category_str
             line[3] = quote + category_str + quote
@@ -122,6 +131,7 @@ with open(cover_vars_filepath,'r') as f:
 with open(cover_vars_filepath,'w') as f:
     print lines
     f.writelines(lines);
+    f.write("var button1 = \'主题概念\'\n")
     f.write("var button1 = \'主题概念\'\n")
     button2_str = 'var button2 = \'>>进入'+nameCN+nameEN+'<<\'\n'
     f.write(button2_str)
@@ -151,10 +161,8 @@ with open(cover_vars_filepath,'w') as f:
 with open(intro_vars_filename,'w') as f:
     f.write("var nameCN = \'" + nameCN + "\';\n")
     f.write("var nameEN = \'"+ nameEN + "\';\n")
-    f.write("var header_title = \'主题概念\';\n")
-    f.write("var array = [];\n")
 
-        
+print "SUCCESS!"
         
         
 

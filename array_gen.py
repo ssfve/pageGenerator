@@ -7,7 +7,12 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 import mysql.connector
 
-gameid = argv[1]
+if argv[1].isdigit():
+    gameid = argv[1]
+else:
+    gameid = ''
+    nameEN = argv[1]
+
 pagegenerator_home = os.getenv('PG_HOME')
 boardgame_home = os.getenv('BG_HOME')
 print boardgame_home
@@ -17,6 +22,7 @@ slash = '/'
 quote = '\''
 con = mysql.connector.connect(host='localhost',port=3306,user='root',password='b0@rdg@merule5')
 
+folder_variables = 'variables'
 schema_name = 'boardgames'
 table_name = 'bggdata'
 #column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
@@ -57,46 +63,74 @@ cur.close()
 con.commit()
 con.close()
 
-gameintro_filename = nameEN + 'Intro.txt'
-gamesetup_filename = nameEN + 'Setup.txt'
-gameflow_filename = nameEN + 'Flow.txt'
-gameend_filename = nameEN + 'End.txt'
+gameintro_filename = 'gameIntro.txt'
+gamesetup_filename = 'gameSetup.txt'
+gameflow_filename = 'gameFlow.txt'
+gameend_filename = 'gameEnd.txt'
+gameexplain_filename = 'gameExplain.txt'
+gameplay_filename = 'gamePlay.txt'
+
 intro_js_filename = 'gameIntro.variables.js'
 flow_js_filename = 'gameFlow.variables.js'
 setup_js_filename = 'gameSetup.variables.js'
 end_js_filename = 'gameEnd.variables.js'
+explain_js_filename = 'gameExplain.variables.js'
+play_js_filename = 'gamePlay.variables.js'
+
 gameintro_filepath = pagegenerator_home + slash + nameEN + slash + gameintro_filename
 gamesetup_filepath = pagegenerator_home + slash + nameEN + slash + gamesetup_filename
 gameflow_filepath = pagegenerator_home + slash + nameEN + slash + gameflow_filename
 gameend_filepath = pagegenerator_home + slash + nameEN + slash + gameend_filename
+gameexplain_filepath = pagegenerator_home + slash + nameEN + slash + gameexplain_filename
+gameplay_filepath = pagegenerator_home + slash + nameEN + slash + gameplay_filename
 
-filepath_list = [gameintro_filepath,gamesetup_filepath,gameflow_filepath,gameend_filepath]
+filepath_list = list()
+filepath_list.append(gameintro_filepath)
+filepath_list.append(gamesetup_filepath)
+filepath_list.append(gameflow_filepath)
+filepath_list.append(gameend_filepath)
+filepath_list.append(gameexplain_filepath)
+filepath_list.append(gameplay_filepath)
 
-intro_js_filepath = boardgame_home + slash + nameEN + slash + intro_js_filename
-flow_js_filepath = boardgame_home + slash + nameEN + slash + flow_js_filename
-setup_js_filepath = boardgame_home + slash + nameEN + slash + setup_js_filename
-end_js_filepath = boardgame_home + slash + nameEN + slash + end_js_filename
 
+intro_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + intro_js_filename
+flow_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + flow_js_filename
+setup_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + setup_js_filename
+end_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + end_js_filename
+explain_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + explain_js_filename
+play_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + play_js_filename
 
-jspath_list = [intro_js_filepath,setup_js_filepath,flow_js_filepath,end_js_filepath]
+jspath_list = list()
+jspath_list.append(intro_js_filepath)
+jspath_list.append(setup_js_filepath)
+jspath_list.append(flow_js_filepath)
+jspath_list.append(end_js_filepath)
+jspath_list.append(explain_js_filepath)
+jspath_list.append(play_js_filepath)
+
 #print cover_vars_filepath
 
 part_no = 0
 for index in range(len(filepath_list)):
-	x_line_no = 0
-	with open(filepath_list[index],'r') as f:
-		lines = f.readlines()
-		for line_no in range(len(lines)):
-			line = lines[line_no].strip('\n')
-			if line == 'A':
-				lines[line_no] = 'part['+str(part_no)+']=generate(array);\nlist_line = \'\';\narray=[];\n'
-				x_line_no = line_no + 1
-				part_no = part_no + 1
-			else:
-				line_no_mod = line_no - x_line_no
-				lines[line_no] = ("array[" + str(line_no_mod) + "]='" + line + "';\n")
+    x_line_no = 0
+    with open(filepath_list[index],'r') as f:
+        lines = f.readlines()
+        for line_no in range(len(lines)):
+            line = lines[line_no].strip('\n')
+            #print line
+            if line_no == 0:
+                part_no = 0
+                line_no_mod = line_no - x_line_no
+                lines[line_no] = ("part=[];\narray[" + str(line_no_mod) + "]='" + line + "';\n")
+            elif line == 'A':
+                lines[line_no] = 'part['+str(part_no)+']=generate(array);\nlist_line = \'\';\narray=[];\n'
+                x_line_no = line_no + 1
+                part_no = part_no + 1
+            else:
+                line_no_mod = line_no - x_line_no
+                lines[line_no] = ("array[" + str(line_no_mod) + "]='" + line + "';\n")
 
-	with open(jspath_list[index],'w') as f:
-		f.write('list_line = \'\';\narray=[];\n')
-		f.writelines(lines)
-		#f.writelines(lines);
+    with open(jspath_list[index],'w') as f:
+        #f.write('list_line = \'\';\nvar array=[];\n')
+        f.writelines(lines)
+        #f.writelines(lines);

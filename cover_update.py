@@ -104,6 +104,12 @@ with open(cover_vars_filepath,'r') as f:
                     category_lsit[index] = u'经营'
                 if category_lsit[index] == u'Negotiation':
                     category_lsit[index] = u'谈判'
+                if category_lsit[index] == u'Card Game':
+                    category_lsit[index] = u'卡牌'
+                if category_lsit[index] == u'Family':
+                    category_lsit[index] = u'家庭'
+                if category_lsit[index] == u'Puzzle':
+                    category_lsit[index] = u'拼图'
             category_str = '，'.join(category_lsit)
             #print category_str
             line[3] = quote + category_str + quote
