@@ -7,21 +7,28 @@ sys.setdefaultencoding('utf8')
 import mysql.connector
 import os
 
-gameid = argv[1]
+#gameid = argv[1]
+nameEN = argv[1]
+
 boardgame_home = os.getenv('BG_HOME')
+pageGenerator_home = os.getenv('PG_HOME')
 print boardgame_home
 #output_filename = filename.rstrip('.txt') + '.py'
 cover_vars_filename = 'cover.variables.js'
+variables = 'variables'
 slash = '/'
 quote = '\''
 con = mysql.connector.connect(host='localhost',port=3306,user='root',password='b0@rdg@merule5')
-
+image = 'img'
+template = 'template'
+gamecover = 'gamecover'
+gameintro = 'gameintro'
 schema_name = 'boardgames'
 table_name = 'bggdata'
 #column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
 #'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayer)+','+str(bestplayer)+',"'+str(self.name)+'"'
-sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where gameid = '+gameid
+sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
 print sql
 cur = con.cursor()
 
@@ -58,15 +65,25 @@ con.close()
 
 intro_vars_filename = 'intro.variables.js'
 rule_vars_filename = 'rule.variables.js'
+title_vars_filename = 'title.variables.js'
 
-cover_vars_filepath = boardgame_home + slash + nameEN + slash + cover_vars_filename
+try:
+    os.mkdir(boardgame_home + slash + nameEN)
+    os.mkdir(boardgame_home + slash + image + slash + nameEN)
+    os.mkdir(pageGenerator_home + slash + nameEN)
+except Exception,e:
+    print e
+    pass
+
+cover_vars_filepath = boardgame_home + slash + nameEN + slash + gamecover + slash + cover_vars_filename
 rule_vars_filepath = boardgame_home + slash + nameEN + slash + rule_vars_filename
-intro_vars_filename = boardgame_home + slash + nameEN + slash + intro_vars_filename
-intro_template_filename = boardgame_home + slash + 'template' + slash + intro_vars_filename
+intro_vars_filename = boardgame_home + slash + nameEN + slash + gameintro + slash + intro_vars_filename
+title_vars_filename = boardgame_home + slash + nameEN + slash + variables + slash + title_vars_filename
+cover_template_filename = boardgame_home + slash + template + slash + gamecover + slash + cover_vars_filename
 
-print cover_vars_filepath
+print cover_template_filename
 
-with open(cover_vars_filepath,'r') as f:
+with open(cover_template_filename,'r') as f:
     lines = f.readlines()
     for line_no in range(len(lines)):
         line = lines[line_no].strip('\n').split(' ')
@@ -113,13 +130,24 @@ with open(cover_vars_filepath,'r') as f:
                 if category_lsit[index] == u'Negotiation':
                     category_lsit[index] = u'谈判'
                 if category_lsit[index] == u'Card Game':
-                    category_lsit[index] = u'卡牌'
+                    category_lsit[index] = u'卡牌游戏'
                 if category_lsit[index] == u'City Building':
                     category_lsit[index] = u'城市建设'
                 if category_lsit[index] == u'Family':
                     category_lsit[index] = u'家庭'
                 if category_lsit[index] == u'Puzzle':
                     category_lsit[index] = u'拼图'
+                if category_lsit[index] == u'Renaissance':
+                    category_lsit[index] = u'文艺复兴'
+                if category_lsit[index] == u'Deduction':
+                    category_lsit[index] = u'推断'
+                if category_lsit[index] == u'Memory':
+                    category_lsit[index] = u'记忆'
+                if category_lsit[index] == u'Party Game':
+                    category_lsit[index] = u'聚会游戏'
+                if category_lsit[index] == u'Humor':
+                    category_lsit[index] = u'幽默'
+                    
             category_str = '，'.join(category_lsit)
             #print category_str
             line[3] = quote + category_str + quote
@@ -128,37 +156,12 @@ with open(cover_vars_filepath,'r') as f:
         lines[line_no] = ' '.join(line) + "\n"
 
 
+
 with open(cover_vars_filepath,'w') as f:
     print lines
     f.writelines(lines);
-    f.write("var button1 = \'主题概念\'\n")
-    f.write("var button1 = \'主题概念\'\n")
-    button2_str = 'var button2 = \'>>进入'+nameCN+nameEN+'<<\'\n'
-    f.write(button2_str)
-    f.write("var numRatesMea = \'点评\'\n")
-    f.write("var valueRatesMea = \'/10\'\n")
-    f.write("var yearPubMea = \'年\'\n")
-    f.write("var weightLimit = \'/5\'\n")
-    f.write("var weightExp = \'复杂度\'\n")
-    f.write("var ageMea = \'岁\'\n")
-    f.write("var ageMeaPlus = \'+\'\n")
-    f.write("var playersMea = \'人\'\n")
-    f.write("var playersBest = bestplayer + \'人最佳\'\n")
-    f.write("var playtimeMea = \'分钟\'\n")
-    f.write("var designerTitle = \'设计师:\'\n")
-    f.write("var langTitleHigh = \'语言\'\n")
-    f.write("var langTitleLow = \'依赖:\'\n")
-    f.write("var langLvl0 = \'0\'\n")
-    f.write("var langLvl1 = \'1\'\n")
-    f.write("var langLvl2 = \'2\'\n")
-    f.write("var langLvl3 = \'3\'\n")
-    f.write("var langLvl4 = \'4\'\n")
-    f.write("var categoryTitle = \'分类机制:\'\n")
-    f.write("var cover_img_scale_factor = 0.5\n")
-    f.write("var pixels = \'px\'\n")
 
-
-with open(intro_vars_filename,'w') as f:
+with open(title_vars_filename,'w') as f:
     f.write("var nameCN = \'" + nameCN + "\';\n")
     f.write("var nameEN = \'"+ nameEN + "\';\n")
 

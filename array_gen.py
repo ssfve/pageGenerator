@@ -7,11 +7,16 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 import mysql.connector
 
+schema_name = 'boardgames'
+table_name = 'bggdata'
+
 if argv[1].isdigit():
     gameid = argv[1]
+    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where gameid = '+gameid
 else:
     gameid = ''
     nameEN = argv[1]
+    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
 
 pagegenerator_home = os.getenv('PG_HOME')
 boardgame_home = os.getenv('BG_HOME')
@@ -23,12 +28,11 @@ quote = '\''
 con = mysql.connector.connect(host='localhost',port=3306,user='root',password='b0@rdg@merule5')
 
 folder_variables = 'variables'
-schema_name = 'boardgames'
-table_name = 'bggdata'
+
 #column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
 #'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayer)+','+str(bestplayer)+',"'+str(self.name)+'"'
-sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where gameid = '+gameid
+
 print sql
 cur = con.cursor()
 
@@ -113,24 +117,27 @@ jspath_list.append(play_js_filepath)
 part_no = 0
 for index in range(len(filepath_list)):
     x_line_no = 0
-    with open(filepath_list[index],'r') as f:
-        lines = f.readlines()
-        for line_no in range(len(lines)):
-            line = lines[line_no].strip('\n')
-            #print line
-            if line_no == 0:
-                part_no = 0
-                line_no_mod = line_no - x_line_no
-                lines[line_no] = ("part=[];\narray[" + str(line_no_mod) + "]='" + line + "';\n")
-            elif line == 'A':
-                lines[line_no] = 'part['+str(part_no)+']=generate(array);\nlist_line = \'\';\narray=[];\n'
-                x_line_no = line_no + 1
-                part_no = part_no + 1
-            else:
-                line_no_mod = line_no - x_line_no
-                lines[line_no] = ("array[" + str(line_no_mod) + "]='" + line + "';\n")
+    try:
+        with open(filepath_list[index],'r') as f:
+            lines = f.readlines()
+            for line_no in range(len(lines)):
+                line = lines[line_no].strip('\n')
+                #print line
+                if line_no == 0:
+                    part_no = 0
+                    line_no_mod = line_no - x_line_no
+                    lines[line_no] = ("part=[];\narray[" + str(line_no_mod) + "]='" + line + "';\n")
+                elif line == 'A':
+                    lines[line_no] = 'part['+str(part_no)+']=generate(array);\nlist_line = \'\';\narray=[];\n'
+                    x_line_no = line_no + 1
+                    part_no = part_no + 1
+                else:
+                    line_no_mod = line_no - x_line_no
+                    lines[line_no] = ("array[" + str(line_no_mod) + "]='" + line + "';\n")
 
-    with open(jspath_list[index],'w') as f:
-        #f.write('list_line = \'\';\nvar array=[];\n')
-        f.writelines(lines)
-        #f.writelines(lines);
+        with open(jspath_list[index],'w') as f:
+            #f.write('list_line = \'\';\nvar array=[];\n')
+            f.writelines(lines)
+            #f.writelines(lines);
+    except Exception,e:
+        print e
