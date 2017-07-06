@@ -73,6 +73,7 @@ gameflow_filename = 'gameFlow.txt'
 gameend_filename = 'gameEnd.txt'
 gameexplain_filename = 'gameExplain.txt'
 gameplay_filename = 'gamePlay.txt'
+gamepic_filename = 'gamePic.txt'
 
 intro_js_filename = 'gameIntro.variables.js'
 flow_js_filename = 'gameFlow.variables.js'
@@ -80,6 +81,7 @@ setup_js_filename = 'gameSetup.variables.js'
 end_js_filename = 'gameEnd.variables.js'
 explain_js_filename = 'gameExplain.variables.js'
 play_js_filename = 'gamePlay.variables.js'
+pic_js_filename = 'gamePic.variables.js'
 
 gameintro_filepath = pagegenerator_home + slash + nameEN + slash + gameintro_filename
 gamesetup_filepath = pagegenerator_home + slash + nameEN + slash + gamesetup_filename
@@ -87,6 +89,7 @@ gameflow_filepath = pagegenerator_home + slash + nameEN + slash + gameflow_filen
 gameend_filepath = pagegenerator_home + slash + nameEN + slash + gameend_filename
 gameexplain_filepath = pagegenerator_home + slash + nameEN + slash + gameexplain_filename
 gameplay_filepath = pagegenerator_home + slash + nameEN + slash + gameplay_filename
+gamepic_filepath = pagegenerator_home + slash + nameEN + slash + gamepic_filename
 
 filepath_list = list()
 filepath_list.append(gameintro_filepath)
@@ -95,7 +98,7 @@ filepath_list.append(gameflow_filepath)
 filepath_list.append(gameend_filepath)
 filepath_list.append(gameexplain_filepath)
 filepath_list.append(gameplay_filepath)
-
+filepath_list.append(gamepic_filepath)
 
 intro_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + intro_js_filename
 flow_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + flow_js_filename
@@ -103,6 +106,7 @@ setup_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables +
 end_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + end_js_filename
 explain_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + explain_js_filename
 play_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + play_js_filename
+pic_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + pic_js_filename
 
 jspath_list = list()
 jspath_list.append(intro_js_filepath)
@@ -111,6 +115,7 @@ jspath_list.append(flow_js_filepath)
 jspath_list.append(end_js_filepath)
 jspath_list.append(explain_js_filepath)
 jspath_list.append(play_js_filepath)
+jspath_list.append(pic_js_filepath)
 
 #print cover_vars_filepath
 

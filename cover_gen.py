@@ -6,9 +6,18 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 import mysql.connector
 import os
+import shutil
 
+schema_name = 'boardgames'
+table_name = 'bggdata'
 #gameid = argv[1]
-nameEN = argv[1]
+if argv[1].isdigit():
+    gameid = argv[1]
+    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where gameid = '+gameid
+else:
+    gameid = ''
+    nameEN = argv[1]
+    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
 
 boardgame_home = os.getenv('BG_HOME')
 pageGenerator_home = os.getenv('PG_HOME')
@@ -23,12 +32,34 @@ image = 'img'
 template = 'template'
 gamecover = 'gamecover'
 gameintro = 'gameintro'
-schema_name = 'boardgames'
-table_name = 'bggdata'
+gamerule = 'gamerule'
+variables = 'variables'
+
+
+category_dict = {
+    u'Economic':u'经营',
+    u'Negotiation':u'谈判',
+    u'Card Game':u'卡牌游戏',
+    u'City Building':u'城市建设',
+    u'Family':u'家庭',
+    u'Puzzle':u'拼图',
+    u'Renaissance':u'文艺复兴',
+    u'Deduction':u'推断',
+    u'Memory':u'记忆',
+    u'Party Game':u'聚会游戏',
+    u'Humor':u'幽默',
+    u'Adventure':u'冒险',
+    u'Mature / Adult':u'成年/成人',
+    u'Medieval':u'中世纪',
+    u'Science Fiction':u'科幻',
+    u'Bluffing':u'吹牛',
+    u'Horror':u'惊悚',
+    u'Political':u'政治'
+}
 #column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
 #'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayer)+','+str(bestplayer)+',"'+str(self.name)+'"'
-sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
+#sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
 print sql
 cur = con.cursor()
 
@@ -67,19 +98,44 @@ intro_vars_filename = 'intro.variables.js'
 rule_vars_filename = 'rule.variables.js'
 title_vars_filename = 'title.variables.js'
 
-try:
-    os.mkdir(boardgame_home + slash + nameEN)
-    os.mkdir(boardgame_home + slash + image + slash + nameEN)
-    os.mkdir(pageGenerator_home + slash + nameEN)
-except Exception,e:
-    print e
-    pass
 
-cover_vars_filepath = boardgame_home + slash + nameEN + slash + gamecover + slash + cover_vars_filename
-rule_vars_filepath = boardgame_home + slash + nameEN + slash + rule_vars_filename
-intro_vars_filename = boardgame_home + slash + nameEN + slash + gameintro + slash + intro_vars_filename
-title_vars_filename = boardgame_home + slash + nameEN + slash + variables + slash + title_vars_filename
-cover_template_filename = boardgame_home + slash + template + slash + gamecover + slash + cover_vars_filename
+gamefolder = boardgame_home + slash + nameEN + slash
+imgfolder = boardgame_home + slash + image + slash + nameEN
+pgfolder = pageGenerator_home + slash + nameEN
+coverfolder = gamefolder + gamecover + slash
+introfolder = gamefolder + gameintro + slash
+rulefolder = gamefolder + gamerule + slash
+variablesfolder = gamefolder + variables + slash
+
+if not os.path.exists(gamefolder):
+    os.mkdir(gamefolder)
+if not os.path.exists(imgfolder):
+    os.mkdir(imgfolder)
+if not os.path.exists(pgfolder):
+    os.mkdir(pgfolder)
+if not os.path.exists(coverfolder):
+    os.mkdir(coverfolder)
+if not os.path.exists(introfolder):
+    os.mkdir(introfolder)
+if not os.path.exists(rulefolder):
+    os.mkdir(rulefolder)
+if not os.path.exists(variablesfolder):
+    os.mkdir(variablesfolder)
+
+
+cover_vars_filepath = gamefolder + gamecover + slash + cover_vars_filename
+rule_vars_filepath =gamefolder + rule_vars_filename
+intro_vars_filepath = gamefolder + gameintro + slash + intro_vars_filename
+title_vars_filepath = gamefolder + variables + slash + title_vars_filename
+
+templatefolder = boardgame_home + slash + template + slash
+template_cover_folder = templatefolder + gamecover + slash
+template_intro_folder = templatefolder + gameintro + slash
+template_rule_folder = templatefolder + gamerule + slash
+template_variables_folder = templatefolder + variables + slash
+
+cover_template_filename = templatefolder + gamecover + slash + cover_vars_filename
+title_template_filename = templatefolder + variables + slash + title_vars_filename
 
 print cover_template_filename
 
@@ -122,31 +178,14 @@ with open(cover_template_filename,'r') as f:
             line[3] = quote + designer_str + quote
             line = line[0:4]
         if line[1] == 'categorys':
-            category_lsit = categorys.split('|')[:-1]
+            try:
+                category_lsit = categorys.split('|')[:-1]
+            except:
+                category_lsit = ['无']
             #print category_lsit
             for index in range(len(category_lsit)):
-                if category_lsit[index] == u'Economic':
-                    category_lsit[index] = u'经营'
-                if category_lsit[index] == u'Negotiation':
-                    category_lsit[index] = u'谈判'
-                if category_lsit[index] == u'Card Game':
-                    category_lsit[index] = u'卡牌游戏'
-                if category_lsit[index] == u'City Building':
-                    category_lsit[index] = u'城市建设'
-                if category_lsit[index] == u'Family':
-                    category_lsit[index] = u'家庭'
-                if category_lsit[index] == u'Puzzle':
-                    category_lsit[index] = u'拼图'
-                if category_lsit[index] == u'Renaissance':
-                    category_lsit[index] = u'文艺复兴'
-                if category_lsit[index] == u'Deduction':
-                    category_lsit[index] = u'推断'
-                if category_lsit[index] == u'Memory':
-                    category_lsit[index] = u'记忆'
-                if category_lsit[index] == u'Party Game':
-                    category_lsit[index] = u'聚会游戏'
-                if category_lsit[index] == u'Humor':
-                    category_lsit[index] = u'幽默'
+                # translate
+                category_lsit[index] = category_dict[category_lsit[index]]
                     
             category_str = '，'.join(category_lsit)
             #print category_str
@@ -155,13 +194,31 @@ with open(cover_template_filename,'r') as f:
             #print line
         lines[line_no] = ' '.join(line) + "\n"
 
+#cover
+for filename in os.listdir(template_cover_folder):
+    if not os.path.exists(coverfolder+filename):
+        shutil.copy(template_cover_folder+filename,coverfolder+filename)
+#intro
+for filename in os.listdir(template_intro_folder):
+    if not os.path.exists(introfolder+filename):
+        shutil.copy(template_intro_folder+filename,introfolder+filename)
+#rule
+for filename in os.listdir(template_rule_folder):
+    if not os.path.exists(rulefolder+filename):
+        shutil.copy(template_rule_folder+filename,rulefolder+filename)
 
+#variables
+for filename in os.listdir(template_variables_folder):
+    if not os.path.exists(variablesfolder+filename):
+        shutil.copy(template_variables_folder+filename,variablesfolder+filename)
 
 with open(cover_vars_filepath,'w') as f:
     print lines
     f.writelines(lines);
 
-with open(title_vars_filename,'w') as f:
+shutil.copy(title_template_filename,title_vars_filepath)
+
+with open(title_vars_filepath,'w') as f:
     f.write("var nameCN = \'" + nameCN + "\';\n")
     f.write("var nameEN = \'"+ nameEN + "\';\n")
 
