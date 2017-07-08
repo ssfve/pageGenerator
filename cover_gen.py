@@ -19,6 +19,8 @@ else:
     nameEN = argv[1]
     sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
 
+color = argv[2]
+
 boardgame_home = os.getenv('BG_HOME')
 pageGenerator_home = os.getenv('PG_HOME')
 print boardgame_home
@@ -35,6 +37,14 @@ gameintro = 'gameintro'
 gamerule = 'gamerule'
 variables = 'variables'
 
+color_dict={
+    'blue':('#283593','#E8EAF6'),
+    'yellow':('#827717','#F9FBE7'),
+    'orange':('#FF6600','#FFF3E0'),
+    'purple':('#6A1B9A','#F3E5F5')
+}
+theme_color = color_dict[color][0]
+subcontent_color = color_dict[color][1]
 
 category_dict = {
     u'Economic':u'经营',
@@ -54,7 +64,10 @@ category_dict = {
     u'Science Fiction':u'科幻',
     u'Bluffing':u'吹牛',
     u'Horror':u'惊悚',
-    u'Political':u'政治'
+    u'Political':u'政治',
+    u'Fantasy':u'奇幻',
+    u'Novel-based':u'小说改编',
+    u'Wargame':u'战棋'
 }
 #column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
@@ -101,11 +114,16 @@ title_vars_filename = 'title.variables.js'
 
 gamefolder = boardgame_home + slash + nameEN + slash
 imgfolder = boardgame_home + slash + image + slash + nameEN
-pgfolder = pageGenerator_home + slash + nameEN
+
+pgfolder = pageGenerator_home + slash + nameEN + slash
+gameTranslatefolder = pageGenerator_home + slash + nameEN + slash
+
 coverfolder = gamefolder + gamecover + slash
 introfolder = gamefolder + gameintro + slash
 rulefolder = gamefolder + gamerule + slash
 variablesfolder = gamefolder + variables + slash
+
+#gameTranslatefolder = pgfolder
 
 if not os.path.exists(gamefolder):
     os.mkdir(gamefolder)
@@ -134,6 +152,8 @@ template_intro_folder = templatefolder + gameintro + slash
 template_rule_folder = templatefolder + gamerule + slash
 template_variables_folder = templatefolder + variables + slash
 
+template_translate_folder = pageGenerator_home + slash + template + slash
+
 cover_template_filename = templatefolder + gamecover + slash + cover_vars_filename
 title_template_filename = templatefolder + variables + slash + title_vars_filename
 
@@ -143,7 +163,7 @@ with open(cover_template_filename,'r') as f:
     lines = f.readlines()
     for line_no in range(len(lines)):
         line = lines[line_no].strip('\n').split(' ')
-        print line
+        #print line
         if line[1] == 'nameCN':
             line[3] = quote + nameCN + quote
         if line[1] == 'nameEN':
@@ -177,6 +197,13 @@ with open(cover_template_filename,'r') as f:
             #print designer_str
             line[3] = quote + designer_str + quote
             line = line[0:4]
+        if line[1] == 'artists':
+            artist_lsit = artists.split('|')[:-1]
+            #print designer_lsit
+            artist_str = ','.join(artist_lsit)
+            #print designer_str
+            line[3] = quote + artist_str + quote
+            line = line[0:4]
         if line[1] == 'categorys':
             try:
                 category_lsit = categorys.split('|')[:-1]
@@ -187,7 +214,7 @@ with open(cover_template_filename,'r') as f:
                 # translate
                 category_lsit[index] = category_dict[category_lsit[index]]
                     
-            category_str = '，'.join(category_lsit)
+            category_str = ','.join(category_lsit)
             #print category_str
             line[3] = quote + category_str + quote
             line = line[0:4]
@@ -212,8 +239,16 @@ for filename in os.listdir(template_variables_folder):
     if not os.path.exists(variablesfolder+filename):
         shutil.copy(template_variables_folder+filename,variablesfolder+filename)
 
+# translate
+#print template_translate_folder
+#print gameTranslatefolder
+for filename in os.listdir(template_translate_folder):
+    #print filename
+    if not os.path.exists(gameTranslatefolder+filename):
+        shutil.copy(template_translate_folder+filename,gameTranslatefolder+filename)
+
 with open(cover_vars_filepath,'w') as f:
-    print lines
+    #print lines
     f.writelines(lines);
 
 shutil.copy(title_template_filename,title_vars_filepath)
@@ -221,6 +256,9 @@ shutil.copy(title_template_filename,title_vars_filepath)
 with open(title_vars_filepath,'w') as f:
     f.write("var nameCN = \'" + nameCN + "\';\n")
     f.write("var nameEN = \'"+ nameEN + "\';\n")
+    f.write("var theme_color = \'"+ theme_color + "\';\n")
+    f.write("var subcontent_color = \'"+ subcontent_color + "\';\n")
+
 
 print "SUCCESS!"
         
