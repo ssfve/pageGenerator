@@ -15,6 +15,7 @@ slash = '/'
 
 index_dict={
     'A':['A'],
+    'AW':['resistance-avalon',u'阿瓦隆'],
     'B':['B'],
     'C':['C'],
     'CC':['splendor',u'璀璨宝石'],
@@ -31,7 +32,8 @@ index_dict={
     'J':['J'],
     'K':['K'],
     'L':['L'],
-    'LS':['lisboa',u'里斯本'],
+    'LS':['two-rooms-and-boom',u'两室一弹'],
+    'LSB':['lisboa',u'里斯本'],
     'M':['M'],
     'N':['N'],
     'O':['O'],
@@ -46,6 +48,7 @@ index_dict={
     'U':['U'],
     'V':['V'],
     'W':['W'],
+    'WZ':['iknow','我知道'],
     'X':['X'],
     'XD':['modern-art',u'现代艺术'],
     'Y':['Y'],

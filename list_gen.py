@@ -21,19 +21,20 @@ js_hotlist_path = js_page_folder + hotlist_variables_filename
 
 top_list=[]
 top1 = ('里斯本','lisboa')
-top2 = ('神奈川学苑','kanagawa')
-top3 = ('时间守望','time-stories')
-top4 = ('一夜终极狼人','one-night-ultimate-werewolf')
-top5 = ('权力的游戏(第二版)','game-thrones-board-game-second-edition')
+top2 = ('阿瓦隆','resistance-avalon')
+top3 = ('我知道','iknow')
+top4 = ('国王的早餐','kings-breakfast')
 gamelist = ('说明书列表','rulebook-list')
 
 top_list.append(top1)
 top_list.append(top2)
 top_list.append(top3)
 top_list.append(top4)
-top_list.append(top5)
+#top_list.append(top5)
 
-game = ('国王的早餐','kings-breakfast')
+#game = ('国王的早餐','kings-breakfast')
+#game = ('我知道','iknow')
+game = ('两室一弹','two-rooms-and-boom')
 top_list.insert(0,game)
 print top_list
 with open(js_hotlist_path,'w') as f:

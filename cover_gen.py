@@ -36,30 +36,36 @@ gamecover = 'gamecover'
 gameintro = 'gameintro'
 gamerule = 'gamerule'
 variables = 'variables'
+none_str = 'N/A'
 
 color_dict={
     'blue':('#283593','#E8EAF6'),
     'yellow':('#827717','#F9FBE7'),
     'orange':('#FF6600','#FFF3E0'),
-    'purple':('#6A1B9A','#F3E5F5')
+    'purple':('#6A1B9A','#F3E5F5'),
+    'grey':('#616161','#F5F5F5'),
+    'pink':('#AD1457','#FCE4EC'),
+    'green':('#2E7D32','#E8F5E9'),
+    'bluegrey':('#37474F','#CFD8DC'),
+    'scarlet':('#C62828','#FFEBEE')
 }
 theme_color = color_dict[color][0]
 subcontent_color = color_dict[color][1]
 
 category_dict = {
-    u'Economic':u'经营',
-    u'Negotiation':u'谈判',
-    u'Card Game':u'卡牌游戏',
+    u'Economic':u'经济运营',
+    u'Negotiation':u'嘴炮谈判',
+    u'Card Game':u'卡牌',
     u'City Building':u'城市建设',
     u'Family':u'家庭',
-    u'Puzzle':u'拼图',
+    u'Puzzle':u'拼解通关',
     u'Renaissance':u'文艺复兴',
-    u'Deduction':u'推断',
+    u'Deduction':u'推理',
     u'Memory':u'记忆',
-    u'Party Game':u'聚会游戏',
+    u'Party Game':u'聚会',
     u'Humor':u'幽默',
     u'Adventure':u'冒险',
-    u'Mature / Adult':u'成年/成人',
+    u'Mature / Adult':u'成人',
     u'Medieval':u'中世纪',
     u'Science Fiction':u'科幻',
     u'Bluffing':u'吹牛',
@@ -67,7 +73,9 @@ category_dict = {
     u'Political':u'政治',
     u'Fantasy':u'奇幻',
     u'Novel-based':u'小说改编',
-    u'Wargame':u'战棋'
+    u'Wargame':u'战棋',
+    u'Trivia':u'冷知识',
+    u'Spies/Secret Agents':u'间谍卧底'
 }
 #column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
@@ -191,19 +199,25 @@ with open(cover_template_filename,'r') as f:
         if line[1] == 'langDepLvl':
             line[3] = quote + langDepLvl + quote
         if line[1] == 'designers':
-            designer_lsit = designers.split('|')[:-1]
-            #print designer_lsit
-            designer_str = ','.join(designer_lsit)
-            #print designer_str
-            line[3] = quote + designer_str + quote
-            line = line[0:4]
+            if designers == None:
+                line[3] = quote + none_str + quote
+                line = line[0:4]
+            else:
+                designer_lsit = designers.split('|')[:-1]
+                designer_str = ','.join(designer_lsit)
+                line[3] = quote + designer_str + quote
+                line = line[0:4]
         if line[1] == 'artists':
-            artist_lsit = artists.split('|')[:-1]
-            #print designer_lsit
-            artist_str = ','.join(artist_lsit)
-            #print designer_str
-            line[3] = quote + artist_str + quote
-            line = line[0:4]
+            if artists == None:
+                line[3] = quote + none_str + quote
+                line = line[0:4]
+            else:
+                artist_lsit = artists.split('|')[:-1]
+                #print designer_lsit
+                artist_str = ','.join(artist_lsit)
+                #print designer_str
+                line[3] = quote + artist_str + quote
+                line = line[0:4]
         if line[1] == 'categorys':
             try:
                 category_lsit = categorys.split('|')[:-1]
