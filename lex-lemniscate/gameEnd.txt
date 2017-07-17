@@ -1,0 +1,29 @@
+﻿H
+G只要一位玩家找出一个由
+O8
+G个标识构成的有效图形序列(见示例)，游戏结束。新手可以换成
+O5
+GE个。
+GE如果你在你的回合找出有效序列，则你赢得游戏。
+GE如果所有的标识全部放置完毕，并且没有玩家能够找出一个有效序列，游戏以平局结束。
+O示例1
+G - 不同颜色距离：
+O1 
+G相同颜色距离：
+OE2
+Ilex-lemniscate/example1.jpg
+A
+O示例2
+G - 不同颜色距离：
+O2 
+G相同颜色距离：
+OE0
+Ilex-lemniscate/example2.jpg
+A
+O示例3
+G - 不同颜色距离：
+O0 
+G相同颜色距离：
+OE0
+Ilex-lemniscate/example3.jpg
+A

@@ -23,6 +23,7 @@ color = argv[2]
 
 boardgame_home = os.getenv('BG_HOME')
 pageGenerator_home = os.getenv('PG_HOME')
+img_home = os.getenv('IMG_HOME')
 print boardgame_home
 #output_filename = filename.rstrip('.txt') + '.py'
 cover_vars_filename = 'cover.variables.js'
@@ -35,7 +36,10 @@ template = 'template'
 gamecover = 'gamecover'
 gameintro = 'gameintro'
 gamerule = 'gamerule'
+gamepic = 'gamepic'
 variables = 'variables'
+explain = 'gameexplain'
+play = 'gameplay'
 none_str = 'N/A'
 
 color_dict={
@@ -47,7 +51,9 @@ color_dict={
     'pink':('#AD1457','#FCE4EC'),
     'green':('#2E7D32','#E8F5E9'),
     'bluegrey':('#37474F','#CFD8DC'),
-    'scarlet':('#C62828','#FFEBEE')
+    'scarlet':('#C62828','#FFEBEE'),
+    'lightblue':('#1976D2','#E3F2FD'),
+    'deeporange':('#BF360C','#FBE9E7')
 }
 theme_color = color_dict[color][0]
 subcontent_color = color_dict[color][1]
@@ -57,6 +63,7 @@ category_dict = {
     u'Negotiation':u'嘴炮谈判',
     u'Card Game':u'卡牌',
     u'City Building':u'城市建设',
+    u'Children\'s Game':u'儿童',
     u'Family':u'家庭',
     u'Puzzle':u'拼解通关',
     u'Renaissance':u'文艺复兴',
@@ -71,11 +78,16 @@ category_dict = {
     u'Bluffing':u'吹牛',
     u'Horror':u'惊悚',
     u'Political':u'政治',
+    u'Prehistoric':u'史前',
     u'Fantasy':u'奇幻',
     u'Novel-based':u'小说改编',
     u'Wargame':u'战棋',
     u'Trivia':u'冷知识',
-    u'Spies/Secret Agents':u'间谍卧底'
+    u'Spies/Secret Agents':u'间谍卧底',
+    u'Abstract Strategy':u'抽象',
+    u'Ancient':u'远古',
+    u'Mythology':u'神话',
+    u'Modern Warfare':u'现代战争'
 }
 #column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
@@ -129,8 +141,10 @@ gameTranslatefolder = pageGenerator_home + slash + nameEN + slash
 coverfolder = gamefolder + gamecover + slash
 introfolder = gamefolder + gameintro + slash
 rulefolder = gamefolder + gamerule + slash
+picfolder = gamefolder + gamepic + slash
 variablesfolder = gamefolder + variables + slash
-
+explainfolder = gamefolder + explain + slash
+playfolder = gamefolder + play + slash
 #gameTranslatefolder = pgfolder
 
 if not os.path.exists(gamefolder):
@@ -145,9 +159,14 @@ if not os.path.exists(introfolder):
     os.mkdir(introfolder)
 if not os.path.exists(rulefolder):
     os.mkdir(rulefolder)
+if not os.path.exists(picfolder):
+    os.mkdir(picfolder)
 if not os.path.exists(variablesfolder):
     os.mkdir(variablesfolder)
-
+if not os.path.exists(explainfolder):
+    os.mkdir(explainfolder)
+if not os.path.exists(playfolder):
+    os.mkdir(playfolder)
 
 cover_vars_filepath = gamefolder + gamecover + slash + cover_vars_filename
 rule_vars_filepath =gamefolder + rule_vars_filename
@@ -158,7 +177,10 @@ templatefolder = boardgame_home + slash + template + slash
 template_cover_folder = templatefolder + gamecover + slash
 template_intro_folder = templatefolder + gameintro + slash
 template_rule_folder = templatefolder + gamerule + slash
+template_pic_folder = templatefolder + gamepic + slash
 template_variables_folder = templatefolder + variables + slash
+template_explain_folder = templatefolder + explain + slash
+template_play_folder = templatefolder + play + slash
 
 template_translate_folder = pageGenerator_home + slash + template + slash
 
@@ -177,7 +199,11 @@ with open(cover_template_filename,'r') as f:
         if line[1] == 'nameEN':
             line[3] = quote + nameEN + quote
         if line[1] == 'rateScore':
-            line[3] = quote + rateScore + quote
+            print rateScore
+            if rateScore == 'None':
+                line[3] = quote + none_str + quote
+            else:
+                line[3] = quote + rateScore + quote
         if line[1] == 'rateNum':
             line[3] = quote + rateNum + quote
         if line[1] == 'yearPub':
@@ -248,10 +274,28 @@ for filename in os.listdir(template_rule_folder):
     if not os.path.exists(rulefolder+filename):
         shutil.copy(template_rule_folder+filename,rulefolder+filename)
 
+#pic
+for filename in os.listdir(template_pic_folder):
+    if not os.path.exists(picfolder+filename):
+        shutil.copy(template_pic_folder+filename,picfolder+filename)
+
 #variables
 for filename in os.listdir(template_variables_folder):
     if not os.path.exists(variablesfolder+filename):
         shutil.copy(template_variables_folder+filename,variablesfolder+filename)
+
+
+#explain
+for filename in os.listdir(template_explain_folder):
+    if not os.path.exists(explainfolder+filename):
+        shutil.copy(template_explain_folder+filename,explainfolder+filename)
+
+#play
+for filename in os.listdir(template_play_folder):
+    if not os.path.exists(playfolder+filename):
+        shutil.copy(template_play_folder+filename,playfolder+filename)
+
+
 
 # translate
 #print template_translate_folder
@@ -266,6 +310,9 @@ with open(cover_vars_filepath,'w') as f:
     f.writelines(lines);
 
 shutil.copy(title_template_filename,title_vars_filepath)
+
+print img_home
+shutil.copy(img_home+slash+'interface/logo.jpg',img_home+slash+nameEN+slash+'logo.jpg')
 
 with open(title_vars_filepath,'w') as f:
     f.write("var nameCN = \'" + nameCN + "\';\n")
