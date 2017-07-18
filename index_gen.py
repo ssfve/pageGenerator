@@ -22,6 +22,7 @@ index_dict={
     'CY':['inis',u'翠屿秘境'],
     'D':['D'],
     'DF':['monopoly',u'大富翁'],
+    'DH':['dahufa',u'大护法'],
     'E':['E'],
     'F':['F'],
     'G':['G'],

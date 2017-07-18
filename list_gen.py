@@ -23,7 +23,7 @@ top_list=[]
 top1 = ('冷战热斗','twilight-struggle')
 top2 = ('石器时代(儿童版)','my-first-stone-age')
 top3 = ('翠屿秘境','inis')
-top4 = ('无穷大里的奥秘','lex-lemniscate')
+top4 = ('权力的游戏(第二版)','game-thrones-board-game-second-edition')
 gamelist = ('说明书列表','rulebook-list')
 
 top_list.append(top1)
@@ -38,7 +38,8 @@ top_list.append(top4)
 #game=('无穷大里的奥秘','lex-lemniscate')
 #game=('翠屿秘境','inis')
 #game=('冷战热斗','twilight-struggle')
-game=('权力的游戏(第二版)','game-thrones-board-game-second-edition')
+#game=('权力的游戏(第二版)','game-thrones-board-game-second-edition')
+game=('大护法','dahufa')
 top_list.insert(0,game)
 print top_list
 with open(js_hotlist_path,'w') as f:

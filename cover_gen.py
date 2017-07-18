@@ -122,6 +122,25 @@ try:
     langDepLvl = str(data[19])
 except Exception,e:
     print 'error when executing sql'
+    yearPub = str(0)
+    minAge = str(0)
+    rateScore = str(0)
+    rateNum = str(0)
+    rank = str(0)
+    weight = str(0)
+    minplayer = str(0)
+    maxplayer = str(0)
+    bestplayer = str(0)
+    mintime = str(0)
+    maxtime = str(0)
+    nameEN = argv[1]
+    nameCN = str(0)
+    designers = str(0)
+    categorys = str(0)
+    mechanisms = str(0)
+    publishers = str(0)
+    artists = str(0)
+    langDepLvl = str(0)
     print e
 cur.close()
 con.commit()
