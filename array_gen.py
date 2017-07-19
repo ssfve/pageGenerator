@@ -40,28 +40,40 @@ try:
     cur.execute(sql)
     records = cur.fetchall()
     data = list(records[0])
-    print data
-    yearPub = str(data[1])
-    minAge = str(data[2])
-    rateScore = str(data[3])
-    rateNum = str(data[4])
-    rank = str(data[5])
-    weight = str(data[6])
-    minplayer = str(data[7])
-    maxplayer = str(data[8])
-    bestplayer = str(data[9])
-    mintime = str(data[10])
-    maxtime = str(data[11])
-    nameEN = data[12]
-    nameCN = data[13]
-    designers = data[14]
-    categorys = data[15]
-    mechanisms = data[16]
-    publishers = data[17]
-    artists = data[18]
-    langDepLvl = str(data[19])
+    #print data
+    yearpublished = str(data[1])
+    age = str(data[2])
+    suggested_playerage = str(data[3])
+    usersrated = str(data[4])
+    rank_subtype = str(data[5])
+    rank_type = str(data[6])
+    numweights = str(data[7])
+    minplayerss = str(data[8])
+    maxplayerss = str(data[9])
+    minplaytime = str(data[10])
+    maxplaytime = str(data[11])
+    language_dependence = str(data[12])
+
+    average = data[13]
+    bayesaverage_subtype = data[14]
+    bayesaverage_type = data[15]
+    averageweight = data[16]
+    
+    suggested_numplayers = str(data[17])
+    name = str(data[18])
+    expansions = str(data[19])
+    game_type = str(data[20])
+    categorys = str(data[21])
+    mechanics = str(data[22])
+    familys = str(data[23])
+    subdomain = str(data[24])
+    designers = str(data[25])
+    artists = str(data[26])
+    publishers = str(data[27])
+    nameEN = name.replace(' ','-')
 except Exception,e:
     print 'error when executing sql'
+    nameEN = name
     print e
 cur.close()
 con.commit()
@@ -146,3 +158,5 @@ for index in range(len(filepath_list)):
             #f.writelines(lines);
     except Exception,e:
         print e
+
+print 'SUCCESS!'

@@ -21,8 +21,8 @@ js_hotlist_path = js_page_folder + hotlist_variables_filename
 
 top_list=[]
 top1 = ('冷战热斗','twilight-struggle')
-top2 = ('石器时代(儿童版)','my-first-stone-age')
-top3 = ('翠屿秘境','inis')
+top2 = ('大护法','dahufa')
+top3 = ('波多黎各','Puerto-Rico')
 top4 = ('权力的游戏(第二版)','game-thrones-board-game-second-edition')
 gamelist = ('说明书列表','rulebook-list')
 
@@ -39,9 +39,11 @@ top_list.append(top4)
 #game=('翠屿秘境','inis')
 #game=('冷战热斗','twilight-struggle')
 #game=('权力的游戏(第二版)','game-thrones-board-game-second-edition')
-game=('大护法','dahufa')
+#game=('大护法','dahufa')
+#game = ('波多黎各','Puerto-Rico')
+game = ('冰酷企鹅','Ice-Cool')
 top_list.insert(0,game)
-print top_list
+#print top_list
 with open(js_hotlist_path,'w') as f:
     f.write("var hot_arrayEN = [];\n")
     f.write("var hot_arrayCN = [];\n")

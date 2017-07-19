@@ -10,14 +10,7 @@ import shutil
 
 schema_name = 'boardgames'
 table_name = 'bggdata'
-#gameid = argv[1]
-if argv[1].isdigit():
-    gameid = argv[1]
-    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where gameid = '+gameid
-else:
-    gameid = ''
-    nameEN = argv[1]
-    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
+table_name_cn = 'bggdatacn'
 
 color = argv[2]
 
@@ -58,89 +51,96 @@ color_dict={
 theme_color = color_dict[color][0]
 subcontent_color = color_dict[color][1]
 
-category_dict = {
-    u'Economic':u'经济运营',
-    u'Negotiation':u'嘴炮谈判',
-    u'Card Game':u'卡牌',
-    u'City Building':u'城市建设',
-    u'Children\'s Game':u'儿童',
-    u'Family':u'家庭',
-    u'Puzzle':u'拼解通关',
-    u'Renaissance':u'文艺复兴',
-    u'Deduction':u'推理',
-    u'Memory':u'记忆',
-    u'Party Game':u'聚会',
-    u'Humor':u'幽默',
-    u'Adventure':u'冒险',
-    u'Mature / Adult':u'成人',
-    u'Medieval':u'中世纪',
-    u'Science Fiction':u'科幻',
-    u'Bluffing':u'吹牛',
-    u'Horror':u'惊悚',
-    u'Political':u'政治',
-    u'Prehistoric':u'史前',
-    u'Fantasy':u'奇幻',
-    u'Novel-based':u'小说改编',
-    u'Wargame':u'战棋',
-    u'Trivia':u'冷知识',
-    u'Spies/Secret Agents':u'间谍卧底',
-    u'Abstract Strategy':u'抽象',
-    u'Ancient':u'远古',
-    u'Mythology':u'神话',
-    u'Modern Warfare':u'现代战争'
-}
-#column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
-#value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
-#'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayer)+','+str(bestplayer)+',"'+str(self.name)+'"'
+#column_str = "(self.gameid,year,age,average,usersrated,rank,averageweight,minplayers,time,designers,categorys,mechanisms,publishers,maxplayers,suggested_numplayers,self.name)" 
+#value_str = str(self.gameid)+','+str(year)+','+str(age)+','+str(average)+','+str(usersrated)+','+str(rank)+','+str(averageweight)+','+str(minplayers)+','+str(time)+','+  \
+#'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayers)+','+str(suggested_numplayers)+',"'+str(self.name)+'"'
 #sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
-print sql
+
 cur = con.cursor()
+
+#gameid = argv[1]
+if argv[1].isdigit():
+    gameid = argv[1]
+    sql = 'SELECT NAME FROM '+schema_name+'.'+table_name+' where gameid = '+gameid
+    cur.execute(sql)
+    records = cur.fetchall()
+    data = list(records[0])
+    nameEN = data[0].replace(' ','-')
+    print nameEN
+    sql = 'SELECT * FROM '+schema_name+'.'+table_name_cn+' where gameid = '+gameid
+else:
+    gameid = ''
+    nameEN = argv[1]
+    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
+
+print sql
 
 try:
     cur.execute(sql)
     records = cur.fetchall()
     data = list(records[0])
     print data
-    yearPub = str(data[1])
-    minAge = str(data[2])
-    rateScore = str(data[3])
-    rateNum = str(data[4])
-    rank = str(data[5])
-    weight = str(data[6])
-    minplayer = str(data[7])
-    maxplayer = str(data[8])
-    bestplayer = str(data[9])
-    mintime = str(data[10])
-    maxtime = str(data[11])
-    nameEN = data[12]
-    nameCN = data[13]
-    designers = data[14]
-    categorys = data[15]
-    mechanisms = data[16]
-    publishers = data[17]
-    artists = data[18]
-    langDepLvl = str(data[19])
+    yearpublished = str(data[1])
+    age = str(data[2])
+    suggested_playerage = str(data[3])
+    usersrated = str(data[4])
+    rank_subtype = str(data[5])
+    rank_type = str(data[6])
+    numweights = str(data[7])
+    minplayers = str(data[8])
+    maxplayers = str(data[9])
+    minplaytime = str(data[10])
+    maxplaytime = str(data[11])
+    language_dependence = str(data[12])
+
+    average = data[13]
+    bayesaverage_subtype = data[14]
+    bayesaverage_type = data[15]
+    averageweight = data[16]
+    
+    suggested_numplayers = str(data[17])
+    nameCN = str(data[18])
+    expansionsCN = str(data[19])
+    game_typeCN = str(data[20])
+    categorysCN = str(data[21])
+    mechanicsCN = str(data[22])
+    familysCN = str(data[23])
+    subdomainCN = str(data[24])
+    designersCN = str(data[25])
+    artistsCN = str(data[26])
+    publishersCN = str(data[27])
+
 except Exception,e:
     print 'error when executing sql'
-    yearPub = str(0)
-    minAge = str(0)
-    rateScore = str(0)
-    rateNum = str(0)
-    rank = str(0)
-    weight = str(0)
-    minplayer = str(0)
-    maxplayer = str(0)
-    bestplayer = str(0)
-    mintime = str(0)
-    maxtime = str(0)
-    nameEN = argv[1]
+    yearpublished = str(0)
+    age = str(0)
+    suggested_playerage = str(0)
+    usersrated = str(0)
+    rank_subtype = str(0)
+    rank_type = str(0)
+    numweights = str(0)
+    minplayerss = str(0)
+    maxplayerss = str(0)
+    minplaytime = str(0)
+    maxplaytime = str(0)
+    language_dependence = str(0)
+
+    average = 0
+    bayesaverage_subtype = 0
+    bayesaverage_type = 0
+    averageweight = 0
+    
+    suggested_numplayers = str(0)
     nameCN = str(0)
-    designers = str(0)
-    categorys = str(0)
-    mechanisms = str(0)
-    publishers = str(0)
-    artists = str(0)
-    langDepLvl = str(0)
+    expansionsCN = str(0)
+    game_typeCN = str(0)
+    categorysCN = str(0)
+    mechanicsCN = str(0)
+    familysCN = str(0)
+    subdomainCN = str(0)
+    designersCN = str(0)
+    artistsCN = str(0)
+    publishersCN = str(0)
     print e
 cur.close()
 con.commit()
@@ -206,7 +206,7 @@ template_translate_folder = pageGenerator_home + slash + template + slash
 cover_template_filename = templatefolder + gamecover + slash + cover_vars_filename
 title_template_filename = templatefolder + variables + slash + title_vars_filename
 
-print cover_template_filename
+#print cover_template_filename
 
 with open(cover_template_filename,'r') as f:
     lines = f.readlines()
@@ -217,47 +217,47 @@ with open(cover_template_filename,'r') as f:
             line[3] = quote + nameCN + quote
         if line[1] == 'nameEN':
             line[3] = quote + nameEN + quote
-        if line[1] == 'rateScore':
-            print rateScore
-            if rateScore == 'None':
+        if line[1] == 'average':
+            #print average
+            if average == 'None':
                 line[3] = quote + none_str + quote
             else:
-                line[3] = quote + rateScore + quote
-        if line[1] == 'rateNum':
-            line[3] = quote + rateNum + quote
-        if line[1] == 'yearPub':
-            line[3] = quote + yearPub + quote
-        if line[1] == 'weight':
-            line[3] = quote + weight + quote
-        if line[1] == 'minAge':
-            line[3] = quote + minAge + quote
-        if line[1] == 'minplayer':
-            line[3] = quote + minplayer + quote
-        if line[1] == 'maxplayer':
-            line[3] = quote + maxplayer + quote
-        if line[1] == 'bestplayer':
-            line[3] = quote + bestplayer + quote
-        if line[1] == 'mintime':
-            line[3] = quote + mintime + quote
-        if line[1] == 'maxtime':
-            line[3] = quote + maxtime + quote
-        if line[1] == 'langDepLvl':
-            line[3] = quote + langDepLvl + quote
+                line[3] = quote + str(round(average,1)) + quote
+        if line[1] == 'usersrated':
+            line[3] = quote + usersrated + quote
+        if line[1] == 'yearpublished':
+            line[3] = quote + yearpublished + quote
+        if line[1] == 'averageweight':
+            line[3] = quote + str(round(averageweight,2)) + quote
+        if line[1] == 'age':
+            line[3] = quote + age + quote
+        if line[1] == 'minplayers':
+            line[3] = quote + minplayers + quote
+        if line[1] == 'maxplayers':
+            line[3] = quote + maxplayers + quote
+        if line[1] == 'suggested_numplayers':
+            line[3] = quote + suggested_numplayers + quote
+        if line[1] == 'minplaytime':
+            line[3] = quote + minplaytime + quote
+        if line[1] == 'maxplaytime':
+            line[3] = quote + maxplaytime + quote
+        if line[1] == 'language_dependence':
+            line[3] = quote + language_dependence + quote
         if line[1] == 'designers':
-            if designers == None:
+            if designersCN == None:
                 line[3] = quote + none_str + quote
                 line = line[0:4]
             else:
-                designer_lsit = designers.split('|')[:-1]
+                designer_lsit = designersCN.split('|')[:-1]
                 designer_str = ','.join(designer_lsit)
                 line[3] = quote + designer_str + quote
                 line = line[0:4]
         if line[1] == 'artists':
-            if artists == None:
+            if artistsCN == None:
                 line[3] = quote + none_str + quote
                 line = line[0:4]
             else:
-                artist_lsit = artists.split('|')[:-1]
+                artist_lsit = artistsCN.split('|')[:-1]
                 #print designer_lsit
                 artist_str = ','.join(artist_lsit)
                 #print designer_str
@@ -265,14 +265,10 @@ with open(cover_template_filename,'r') as f:
                 line = line[0:4]
         if line[1] == 'categorys':
             try:
-                category_lsit = categorys.split('|')[:-1]
+                category_lsit = categorysCN.split('|')[:-1]
             except:
                 category_lsit = ['无']
             #print category_lsit
-            for index in range(len(category_lsit)):
-                # translate
-                category_lsit[index] = category_dict[category_lsit[index]]
-                    
             category_str = ','.join(category_lsit)
             #print category_str
             line[3] = quote + category_str + quote
@@ -330,7 +326,7 @@ with open(cover_vars_filepath,'w') as f:
 
 shutil.copy(title_template_filename,title_vars_filepath)
 
-print img_home
+#print img_home
 shutil.copy(img_home+slash+'interface/logo.jpg',img_home+slash+nameEN+slash+'logo.jpg')
 
 with open(title_vars_filepath,'w') as f:
