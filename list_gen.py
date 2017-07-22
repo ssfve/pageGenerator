@@ -20,10 +20,10 @@ js_page_folder = boardgame_home + slash + jsFolder + slash + pageFolder + slash
 js_hotlist_path = js_page_folder + hotlist_variables_filename
 
 top_list=[]
-top1 = ('冷战热斗','twilight-struggle')
+top1 = ('多米诺王国','Kingdomino')
 top2 = ('大护法','dahufa')
 top3 = ('波多黎各','Puerto-Rico')
-top4 = ('权力的游戏(第二版)','game-thrones-board-game-second-edition')
+top4 = ('冰酷企鹅','Ice-Cool')
 gamelist = ('说明书列表','rulebook-list')
 
 top_list.append(top1)
@@ -41,7 +41,9 @@ top_list.append(top4)
 #game=('权力的游戏(第二版)','game-thrones-board-game-second-edition')
 #game=('大护法','dahufa')
 #game = ('波多黎各','Puerto-Rico')
-game = ('冰酷企鹅','Ice-Cool')
+#game = ('冰酷企鹅','Ice-Cool')
+#game = ('多米诺王国','Kingdomino')
+game = ('庞氏骗局','Ponzi-Scheme')
 top_list.insert(0,game)
 #print top_list
 with open(js_hotlist_path,'w') as f:

@@ -35,19 +35,20 @@ explain = 'gameexplain'
 play = 'gameplay'
 none_str = 'N/A'
 
-color_dict={
-    'blue':('#283593','#E8EAF6'),
-    'yellow':('#827717','#F9FBE7'),
-    'orange':('#FF6600','#FFF3E0'),
-    'purple':('#6A1B9A','#F3E5F5'),
-    'grey':('#616161','#F5F5F5'),
-    'pink':('#AD1457','#FCE4EC'),
-    'green':('#2E7D32','#E8F5E9'),
-    'bluegrey':('#37474F','#CFD8DC'),
-    'scarlet':('#C62828','#FFEBEE'),
-    'lightblue':('#1976D2','#E3F2FD'),
-    'deeporange':('#BF360C','#FBE9E7')
-}
+color_dict = dict()
+color_dict['blue']=('#283593','#E8EAF6')
+color_dict['lime']=('#827717','#F9FBE7')
+color_dict['yellow']=('#FFEB3B','#FFFDE7')
+color_dict['orange']=('#FF6600','#FFF3E0')
+color_dict['purple']=('#6A1B9A','#F3E5F5')
+color_dict['grey']=('#616161','#F5F5F5')
+color_dict['pink']=('#AD1457','#FCE4EC')
+color_dict['green']=('#2E7D32','#E8F5E9')
+color_dict['bluegrey']=('#37474F','#CFD8DC')
+color_dict['scarlet']=('#C62828','#FFEBEE')
+color_dict['lightblue']=('#1976D2','#E3F2FD')
+color_dict['deeporange']=('#BF360C','#FBE9E7')
+
 theme_color = color_dict[color][0]
 subcontent_color = color_dict[color][1]
 
@@ -65,7 +66,7 @@ if argv[1].isdigit():
     cur.execute(sql)
     records = cur.fetchall()
     data = list(records[0])
-    nameEN = data[0].replace(' ','-')
+    nameEN = data[0].replace(' ','-').replace('"','').replace(':','').replace('(','').replace(')','')
     print nameEN
     sql = 'SELECT * FROM '+schema_name+'.'+table_name_cn+' where gameid = '+gameid
 else:
@@ -119,8 +120,8 @@ except Exception,e:
     rank_subtype = str(0)
     rank_type = str(0)
     numweights = str(0)
-    minplayerss = str(0)
-    maxplayerss = str(0)
+    minplayers = str(0)
+    maxplayers = str(0)
     minplaytime = str(0)
     maxplaytime = str(0)
     language_dependence = str(0)

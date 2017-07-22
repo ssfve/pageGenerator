@@ -36,3 +36,5 @@ O30
 GE分，游戏结束。
 SE
 A
+IDixit/1.jpg
+A

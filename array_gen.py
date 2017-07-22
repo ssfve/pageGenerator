@@ -70,7 +70,8 @@ try:
     designers = str(data[25])
     artists = str(data[26])
     publishers = str(data[27])
-    nameEN = name.replace(' ','-')
+    nameEN = name.replace(' ','-').replace(':','').replace('(','').replace(')','')
+    print nameEN
 except Exception,e:
     print 'error when executing sql'
     nameEN = name
