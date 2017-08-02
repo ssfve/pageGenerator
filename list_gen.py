@@ -20,10 +20,10 @@ js_page_folder = boardgame_home + slash + jsFolder + slash + pageFolder + slash
 js_hotlist_path = js_page_folder + hotlist_variables_filename
 
 top_list=[]
-top1 = ('多米诺王国','Kingdomino')
-top2 = ('大护法','dahufa')
-top3 = ('波多黎各','Puerto-Rico')
-top4 = ('冰酷企鹅','Ice-Cool')
+top1 = ('拼布艺术','Patchwork')
+top2 = ('约德尔战斗学院','Mechs-vs.-Minions')
+top3 = ('火星开发计划','Terraforming-Mars')
+top4 = ('加拿大棋','Crokinole')
 gamelist = ('说明书列表','rulebook-list')
 
 top_list.append(top1)
@@ -32,6 +32,8 @@ top_list.append(top3)
 top_list.append(top4)
 #top_list.append(top5)
 
+game = ('拉密','Rummikub')
+#game = ('伊斯坦布尔','Istanbul')
 #game = ('国王的早餐','kings-breakfast')
 #game = ('我知道','iknow')
 #game = ('两室一弹','two-rooms-and-boom')
@@ -43,7 +45,15 @@ top_list.append(top4)
 #game = ('波多黎各','Puerto-Rico')
 #game = ('冰酷企鹅','Ice-Cool')
 #game = ('多米诺王国','Kingdomino')
-game = ('庞氏骗局','Ponzi-Scheme')
+#game = ('庞氏骗局','Ponzi-Scheme')
+#game = ('七大奇迹','7-Wonders')
+#game = ('圣托里尼','Santorini')
+#game = ('东海道','Tokaido')
+#game = ('火星开发计划','Terraforming-Mars')
+#game = ('拼布艺术','Patchwork')
+#game = ('卡卡颂','Carcassonne')
+#game = ('约德尔战斗学院','Mechs-vs.-Minions')
+#game = ('香料之路','Century-Spice-Road')
 top_list.insert(0,game)
 #print top_list
 with open(js_hotlist_path,'w') as f:

@@ -8,11 +8,11 @@ import mysql.connector
 import os
 import shutil
 
+button1 = '游戏背景'
+
 schema_name = 'boardgames'
 table_name = 'bggdata'
 table_name_cn = 'bggdatacn'
-
-color = argv[2]
 
 boardgame_home = os.getenv('BG_HOME')
 pageGenerator_home = os.getenv('PG_HOME')
@@ -48,11 +48,19 @@ color_dict['bluegrey']=('#37474F','#CFD8DC')
 color_dict['scarlet']=('#C62828','#FFEBEE')
 color_dict['lightblue']=('#1976D2','#E3F2FD')
 color_dict['deeporange']=('#BF360C','#FBE9E7')
+color_dict['brown']=('#4E342E','#EFEBE9')
+color_dict['lightbrown']=('#795548','#EFEBE9')
+
+try:
+    color = argv[2]
+except Exception,e:
+    #print e
+    print color_dict.keys()
 
 theme_color = color_dict[color][0]
 subcontent_color = color_dict[color][1]
 
-#column_str = "(self.gameid,year,age,average,usersrated,rank,averageweight,minplayers,time,designers,categorys,mechanisms,publishers,maxplayers,suggested_numplayers,self.name)" 
+#column_str = "(self.gameid,year,age,average,usersrated,rank,averageweight,minplayers,time,designers,categorys,mechanisms,publishers,maxplayers,suggested_numplayers,self.name)"
 #value_str = str(self.gameid)+','+str(year)+','+str(age)+','+str(average)+','+str(usersrated)+','+str(rank)+','+str(averageweight)+','+str(minplayers)+','+str(time)+','+  \
 #'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayers)+','+str(suggested_numplayers)+',"'+str(self.name)+'"'
 #sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
@@ -98,7 +106,7 @@ try:
     bayesaverage_subtype = data[14]
     bayesaverage_type = data[15]
     averageweight = data[16]
-    
+
     suggested_numplayers = str(data[17])
     nameCN = str(data[18])
     expansionsCN = str(data[19])
@@ -130,7 +138,7 @@ except Exception,e:
     bayesaverage_subtype = 0
     bayesaverage_type = 0
     averageweight = 0
-    
+
     suggested_numplayers = str(0)
     nameCN = str(0)
     expansionsCN = str(0)
@@ -335,11 +343,12 @@ with open(title_vars_filepath,'w') as f:
     f.write("var nameEN = \'"+ nameEN + "\';\n")
     f.write("var theme_color = \'"+ theme_color + "\';\n")
     f.write("var subcontent_color = \'"+ subcontent_color + "\';\n")
+    f.write("var button1 = \'"+ button1 + "\';\n")
 
 
 print "SUCCESS!"
-        
-        
+
+
 
 
 

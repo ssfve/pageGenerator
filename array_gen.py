@@ -18,6 +18,7 @@ else:
     nameEN = argv[1]
     sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
 
+mode = argv[2]
 pagegenerator_home = os.getenv('PG_HOME')
 boardgame_home = os.getenv('BG_HOME')
 print boardgame_home
@@ -29,7 +30,7 @@ con = mysql.connector.connect(host='localhost',port=3306,user='root',password='b
 
 folder_variables = 'variables'
 
-#column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)" 
+#column_str = "(self.gameid,year,minAge,rateScore,rateNum,rank,weight,minplayer,time,designers,categorys,mechanisms,publishers,maxplayer,bestplayer,self.name)"
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
 #'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayer)+','+str(bestplayer)+',"'+str(self.name)+'"'
 
@@ -58,7 +59,7 @@ try:
     bayesaverage_subtype = data[14]
     bayesaverage_type = data[15]
     averageweight = data[16]
-    
+
     suggested_numplayers = str(data[17])
     name = str(data[18])
     expansions = str(data[19])
@@ -87,6 +88,7 @@ gameend_filename = 'gameEnd.txt'
 gameexplain_filename = 'gameExplain.txt'
 gameplay_filename = 'gamePlay.txt'
 gamepic_filename = 'gamePic.txt'
+gameother_filename = 'gameOther.txt'
 
 intro_js_filename = 'gameIntro.variables.js'
 flow_js_filename = 'gameFlow.variables.js'
@@ -95,6 +97,7 @@ end_js_filename = 'gameEnd.variables.js'
 explain_js_filename = 'gameExplain.variables.js'
 play_js_filename = 'gamePlay.variables.js'
 pic_js_filename = 'gamePic.variables.js'
+other_js_filename = 'gameOther.variables.js'
 
 gameintro_filepath = pagegenerator_home + slash + nameEN + slash + gameintro_filename
 gamesetup_filepath = pagegenerator_home + slash + nameEN + slash + gamesetup_filename
@@ -103,6 +106,7 @@ gameend_filepath = pagegenerator_home + slash + nameEN + slash + gameend_filenam
 gameexplain_filepath = pagegenerator_home + slash + nameEN + slash + gameexplain_filename
 gameplay_filepath = pagegenerator_home + slash + nameEN + slash + gameplay_filename
 gamepic_filepath = pagegenerator_home + slash + nameEN + slash + gamepic_filename
+gameother_filepath = pagegenerator_home + slash + nameEN + slash + gameother_filename
 
 filepath_list = list()
 filepath_list.append(gameintro_filepath)
@@ -112,6 +116,8 @@ filepath_list.append(gameend_filepath)
 filepath_list.append(gameexplain_filepath)
 filepath_list.append(gameplay_filepath)
 filepath_list.append(gamepic_filepath)
+if mode == 4:
+    filepath_list.append(gameother_filepath)
 
 intro_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + intro_js_filename
 flow_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + slash + flow_js_filename
@@ -120,6 +126,7 @@ end_js_filepath = boardgame_home + slash + nameEN + slash + folder_variables + s
 explain_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + explain_js_filename
 play_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + play_js_filename
 pic_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + pic_js_filename
+other_js_filepath =  boardgame_home + slash + nameEN + slash + folder_variables + slash + other_js_filename
 
 jspath_list = list()
 jspath_list.append(intro_js_filepath)
@@ -129,7 +136,8 @@ jspath_list.append(end_js_filepath)
 jspath_list.append(explain_js_filepath)
 jspath_list.append(play_js_filepath)
 jspath_list.append(pic_js_filepath)
-
+if mode == 4:
+    jspath_list.append(other_js_filepath)
 #print cover_vars_filepath
 
 part_no = 0
