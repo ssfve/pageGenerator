@@ -20,19 +20,21 @@ js_page_folder = boardgame_home + slash + jsFolder + slash + pageFolder + slash
 js_hotlist_path = js_page_folder + hotlist_variables_filename
 
 top_list=[]
-top1 = ('拼布艺术','Patchwork')
+top1 = ('香料之路','Century-Spice-Road')
 top2 = ('约德尔战斗学院','Mechs-vs.-Minions')
 top3 = ('火星开发计划','Terraforming-Mars')
-top4 = ('加拿大棋','Crokinole')
+top4 = ('圣托里尼','Santorini')
+top5 = ('庞氏骗局','Ponzi-Scheme')
 gamelist = ('说明书列表','rulebook-list')
 
 top_list.append(top1)
 top_list.append(top2)
 top_list.append(top3)
 top_list.append(top4)
+top_list.append(top5)
 #top_list.append(top5)
 
-game = ('拉密','Rummikub')
+#game = ('拉密','Rummikub')
 #game = ('伊斯坦布尔','Istanbul')
 #game = ('国王的早餐','kings-breakfast')
 #game = ('我知道','iknow')
@@ -54,7 +56,7 @@ game = ('拉密','Rummikub')
 #game = ('卡卡颂','Carcassonne')
 #game = ('约德尔战斗学院','Mechs-vs.-Minions')
 #game = ('香料之路','Century-Spice-Road')
-top_list.insert(0,game)
+#top_list.insert(0,game)
 #print top_list
 with open(js_hotlist_path,'w') as f:
     f.write("var hot_arrayEN = [];\n")
