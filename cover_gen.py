@@ -9,6 +9,11 @@ import os
 import shutil
 
 button1 = '游戏背景'
+button2 = '游戏名称'
+button3 = '游戏概念'
+button4 = '其它规则'
+button5 = '中文规则'
+button6 = '关注我们'
 
 schema_name = 'boardgames'
 table_name = 'bggdata'
@@ -344,6 +349,11 @@ with open(title_vars_filepath,'w') as f:
     f.write("var theme_color = \'"+ theme_color + "\';\n")
     f.write("var subcontent_color = \'"+ subcontent_color + "\';\n")
     f.write("var button1 = \'"+ button1 + "\';\n")
+    f.write("var button2 = \'"+ button2 + "\';\n")
+    f.write("var button3 = \'"+ button3 + "\';\n")
+    f.write("var button4 = \'"+ button4 + "\';\n")
+    f.write("var button5 = \'"+ button5 + "\';\n")
+    f.write("var button6 = \'"+ button6 + "\';\n")
 
 
 print "SUCCESS!"

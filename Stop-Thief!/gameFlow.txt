@@ -1,0 +1,26 @@
+H
+G起始玩家从小偷牌堆翻开第
+O1
+G张卡牌，并按下APP上的
+O"New Thief"
+GE按钮来开始游戏。
+GEAPP将播放小偷的声音，并给予犯罪地点。
+GE小偷到底会藏匿在哪一栋建筑物内呢?
+G玩家顺位由顺时针旋转。每回合有
+O3
+GE个步骤：
+A
+S1.得到一个线索：
+IStop-Thief!/action1.jpg
+SE
+A
+S2.使用卡牌：
+IStop-Thief!/action2.jpg
+SE
+A
+S3.尝试逮捕（可选）：
+IStop-Thief!/action3.jpg
+SE
+A
+IStop-Thief!/1.jpg
+A

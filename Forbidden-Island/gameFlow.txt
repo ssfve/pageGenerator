@@ -1,0 +1,17 @@
+H
+G每位玩家顺时针轮流进行游戏，每位玩家回合必须依次执行以下
+O3
+GE个动作：
+A
+S一）行动：
+IForbidden-Island/action1.jpg
+SE
+A
+S二）摸宝藏牌：
+IForbidden-Island/action2.jpg
+SE
+A
+S三）抽洪水牌：
+IForbidden-Island/action3.jpg
+SE
+A

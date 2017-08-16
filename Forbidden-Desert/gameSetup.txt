@@ -1,0 +1,12 @@
+﻿H
+IForbidden-Desert/gamesetup.jpg
+GE最近去过沙漠的玩家成为起始玩家。
+A
+S角色介绍:
+IForbidden-Desert/characters.jpg
+SE
+A
+S板块介绍：
+IForbidden-Desert/tiles.jpg
+SE
+A

@@ -1,0 +1,9 @@
+H
+GE从起始玩家开始顺时针进行游戏。
+IForbidden-Desert/gameflow.jpg
+GE当前玩家行动完后，由下家开始行动。
+A
+S卡牌介绍：
+IForbidden-Desert/cards.jpg
+SE
+A

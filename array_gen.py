@@ -9,14 +9,22 @@ import mysql.connector
 
 schema_name = 'boardgames'
 table_name = 'bggdata'
+#print sql
+con = mysql.connector.connect(host='localhost',port=3306,user='root',password='b0@rdg@merule5')
+cur = con.cursor()
 
 if argv[1].isdigit():
     gameid = argv[1]
     sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where gameid = '+gameid
 else:
-    gameid = ''
     nameEN = argv[1]
-    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where nameEN = \''+nameEN+'\''
+    sql = 'SELECT gameid FROM '+schema_name+'.'+table_name+' where name = \''+nameEN+'\''
+    cur.execute(sql)
+    records = cur.fetchall()
+    data = list(records[0])
+    gameid = data[0]
+    sql = 'SELECT * FROM '+schema_name+'.'+table_name+' where gameid = '+str(gameid)
+    print sql
 
 mode = argv[2]
 pagegenerator_home = os.getenv('PG_HOME')
@@ -26,7 +34,7 @@ print boardgame_home
 cover_vars_filename = 'cover.variables.js'
 slash = '/'
 quote = '\''
-con = mysql.connector.connect(host='localhost',port=3306,user='root',password='b0@rdg@merule5')
+
 
 folder_variables = 'variables'
 
@@ -34,8 +42,7 @@ folder_variables = 'variables'
 #value_str = str(self.gameid)+','+str(year)+','+str(minAge)+','+str(rateScore)+','+str(rateNum)+','+str(rank)+','+str(weight)+','+str(minplayer)+','+str(time)+','+  \
 #'"'+str(designer_str)+'","'+str(category_str)+'","'+str(mechanism_str)+'","'+str(publisher_str)+'",'+str(maxplayer)+','+str(bestplayer)+',"'+str(self.name)+'"'
 
-print sql
-cur = con.cursor()
+
 
 try:
     cur.execute(sql)
